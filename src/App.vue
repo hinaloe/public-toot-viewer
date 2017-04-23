@@ -8,10 +8,10 @@
       <div class="alert alert-warning" v-if="error">{{error}}</div>
         <form action="post" @submit.prevent="submit">
             <div class="form-group row">
-                <label for="domain" class="col col-md-2">Domain</label>
-                <input type="text" class="form-control col col-md-4"
+                <label for="domain" class="col-4 col-md-2">Domain</label>
+                <input type="text" class="form-control col-8 col-md-4"
                        placeholder="mstdn.jp" id="domain" v-model="domain">
-                <div class="col col-md-6">
+                <div class="col-12 col-md-6">
                     <input type="submit" class="btn btn-primary" value="Load">
                     <label class="custom-control custom-checkbox ml-3">
                         <input type="checkbox" class="custom-control-input" v-model="local">
@@ -128,5 +128,9 @@ export default {
   /*text-align: center;*/
   color: #2c3e50;
   margin-top: 60px;
+}
+
+img {
+    max-width: 100%;
 }
 </style>

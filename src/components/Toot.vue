@@ -7,15 +7,15 @@
                 </a>
             </div>
             <div style="width: 100%">
-                <div class="d-flex">
+                <div class="d-flex toot-header">
                     <a :href="toot.account.url" :title="toot.account.note">
                         <div>{{toot.account.display_name}} @{{toot.account.username}}</div>
                     </a>
-                    <a :href="toot.url" class="ml-auto">{{date}}</a>
+                    <a :href="toot.url" class="ml-auto text-right date">{{date}}</a>
                 </div>
                 <div v-html="toot.content"></div>
                 <div v-if="toot.media_attachments.length">
-                    <div v-if="toot.sensitive && !allowSensitive" style="width: 100%; background: #303030; color: aliceblue;padding: 60px" class="text-center" @click="allowSensitive=true">
+                    <div v-if="toot.sensitive && !allowSensitive" class="text-center sensitive" @click="allowSensitive=true">
                         Sensitive content (click to show)
                     </div>
                     <div v-else>
@@ -33,7 +33,30 @@
         width: 0;
         height: 0;
         visibility: hidden;
-        display: inline-block;
+        display: inline-flex;
+    }
+</style>
+<style scoped="scoped">
+    .card {
+        word-break: break-all;
+    }
+
+    .sensitive {
+        width: 100%;
+        background: #303030;
+        color: aliceblue;
+        padding: 60px 30px;
+        word-break: keep-all;
+    }
+
+    @media screen and (max-width: 768px) {
+        .toot-header {
+            flex-direction: column;
+        }
+    }
+    .toot-header .date {
+        font-size: .8em;
+        color: #626262;
     }
 </style>
 <script>
