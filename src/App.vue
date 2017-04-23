@@ -70,13 +70,13 @@ export default {
     }, 30000)
   },
   computed: {
-    apiUri () {
+  },
+  methods: {
+    getApiUri () {
       const url = new URL(String.includes(this.domain, '://') ? this.domain : 'https://' + this.domain)
       url.pathname = '/api/v1/timelines/public'
       return url
-    }
-  },
-  methods: {
+    },
     submit () {
       this.error = ''
       this.toots = []
@@ -85,8 +85,7 @@ export default {
         if (!String.includes(this.domain, '.')) {
           throw new Error('Invalid domain')
         }
-        console.log(this.apiUri)
-        const url = this.apiUri
+        const url = this.getApiUri()
         this.currentUri = url
         console.log(url.searchParams)
         url.searchParams.append('limit', 40)
