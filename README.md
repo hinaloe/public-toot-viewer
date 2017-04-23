@@ -1,6 +1,8 @@
-# public-toot-viewer
+# Public toot viewer
 
-> A Vue.js project
+マストドンの公開タイムラインをみるやつ。inspired by http://junk.azyobuzi.net/mastodonptl/
+
+https://m6n-view.hnle.tk/
 
 ## Build Setup
 
@@ -23,5 +25,3 @@ npm run unit
 # run all tests
 npm test
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
