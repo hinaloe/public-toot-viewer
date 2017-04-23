@@ -5,6 +5,8 @@
         <p class="lead">
             マストドンの公開タイムラインをみるやつ。inspired by <a href="http://junk.azyobuzi.net/mastodonptl/">junk.azyobuzi.net/mastodonptl/</a>
         </p>
+        <p>github: <a href="https://github.com/hinaloe/public-toot-viewer"><span class="hidden-xs-down">hinaloe/</span>public-toot-viewer</a> by <a
+                href="https://github.com/hinaloe/">hinaloe</a> on <a href="https://mdn.hinaloe.net">ひな丼</a></p>
       <div class="alert alert-warning" v-if="error">{{error}}</div>
         <form action="post" @submit.prevent="submit">
             <div class="form-group row">

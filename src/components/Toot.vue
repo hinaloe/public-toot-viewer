@@ -20,7 +20,7 @@
                     </div>
                     <div v-else>
                         <a :href="media.url" v-for="media in toot.media_attachments">
-                            <img :src="media.preview_url" alt="">
+                            <img :src="media.preview_url" alt="" class="img-fluid img-thumbnail">
                         </a>
                     </div>
                 </div>
