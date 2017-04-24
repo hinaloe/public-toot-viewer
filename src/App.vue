@@ -28,7 +28,7 @@
             <div v-for="toot in toots" :key="toot.id">
                 <Toot :toot="toot"></Toot>
             </div>
-            <div class="text-center" v-if="currentUri && !loading" @click.prevent="loadMore" style="cursor: pointer">more</div>
+            <div class="text-center pb-3 more" v-if="currentUri && !loading" @click.prevent="loadMore" style="cursor: pointer">more</div>
         </div>
     </div>
   </div>
@@ -133,5 +133,13 @@ export default {
 
 img {
     max-width: 100%;
+}
+
+.more {
+    border-radius: 5px;
+    transition: background-color .1s;
+}
+.more:hover {
+    background: rgba(79, 79, 79, 0.10);
 }
 </style>
