@@ -13,7 +13,15 @@
                     </a>
                     <a :href="toot.url" class="ml-auto text-right date">{{date}}</a>
                 </div>
-                <div v-html="toot.content"></div>
+                <p v-if="toot.spoiler_text">{{toot.spoiler_text}} 
+                    <button @click.prevent="more=true" class="btn btn-outline-primary btn-sm" v-if="!more">
+                        Read more...
+                    </button>
+                    <button @click.prevent="more=false" class="btn btn-outline-secondary btn-sm" v-else>
+                        Close
+                    </button>
+                </p>
+                <div v-html="toot.content" v-if="!toot.spoiler_text||more"></div>
                 <div v-if="toot.media_attachments.length">
                     <div v-if="toot.sensitive && !allowSensitive" class="text-center sensitive" @click="allowSensitive=true">
                         Sensitive content (click to show)
@@ -69,7 +77,8 @@
     },
     data () {
       return {
-        allowSensitive: false
+        allowSensitive: false,
+        more: false
       }
     },
     computed: {
