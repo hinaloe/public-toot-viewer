@@ -11,8 +11,12 @@
         <form action="/" method="post" @submit.prevent="submit">
             <div class="form-group row">
                 <label for="domain" class="col-4 col-md-2">Domain</label>
-                <input type="text" class="form-control col-8 col-md-4"
-                       placeholder="mstdn.jp" id="domain" v-model="domain">
+                <div class="col-8 col-md-4">
+                    <input type="text" class="form-control" placeholder="mstdn.jp" id="domain" v-model="domain" @input="inputDomain">
+                    <div class="dropdown-menu" style="display: block;right: 0" v-show="suggestEnabled && filteredInstances.length">
+                        <instance :instance="instance" v-for="instance in filteredInstances" :key="instance.name" @selected="instanceSelected">err</instance>
+                    </div>
+                </div>
                 <div class="col-12 col-md-6">
                     <input type="submit" class="btn btn-primary" value="Load">
                     <label class="custom-control custom-checkbox ml-3">
@@ -29,6 +33,7 @@
                 <Toot :toot="toot"></Toot>
             </div>
             <div class="text-center pb-3 more" v-if="currentUri && !loading" @click.prevent="loadMore" style="cursor: pointer">more</div>
+            <div v-else-if="loading" class="text-center pb-3">Loading...</div>
         </div>
     </div>
   </div>
@@ -36,12 +41,15 @@
 
 <script>
 import Toot from './components/Toot.vue'
+import Instance from './components/Instance.vue'
 import axios from 'axios'
 
 export default {
   data () {
     return {
       toots: [],
+      instances: [],
+      suggestEnabled: false,
       domain: '',
       local: false,
       loading: false,
@@ -51,7 +59,7 @@ export default {
   },
   name: 'app',
   components: {
-    Toot
+    Toot, Instance
   },
   mounted () {
     if (!window.URLSearchParams) {
@@ -62,14 +70,28 @@ export default {
       if (this.currentUri && !this.loading && this.toots.length) {
         const url = this.currentUri
         url.searchParams.delete('max_id')
-        url.searchParams.append('since_id', this.toots[0].id)
+        url.searchParams.set('since_id', this.toots[0].id)
         axios.get(url.href).then((res) => {
           this.toots.unshift(...res.data)
         })
       }
     }, 30000)
+    axios.get('https://instances.mastodon.xyz/instances.json').then(res => {
+      if (!Array.isArray(res.data)) {
+        return Promise.reject(new Error('Invalid response'))
+      }
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Instances list was loaded.', res.data)
+      }
+      this.instances = res.data
+    }).catch(err => {
+      this.error = err.message
+    })
   },
   computed: {
+    filteredInstances () {
+      return this.instances.filter(instance => String.includes(instance.name, this.domain)).slice(0, 6)
+    }
   },
   methods: {
     getApiUri () {
@@ -81,22 +103,28 @@ export default {
       this.error = ''
       this.toots = []
       this.loading = true
+      this.suggestEnabled = false
       Promise.resolve().then(() => {
         if (!String.includes(this.domain, '.')) {
           throw new Error('Invalid domain')
         }
         const url = this.getApiUri()
         this.currentUri = url
-        console.log(url.searchParams)
-        url.searchParams.append('limit', 40)
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(url.searchParams)
+        }
+        url.searchParams.set('limit', 40)
         if (this.local) {
           url.searchParams.append('local', true)
         }
         return axios.get(url.href)
       }).then(res => {
-        console.log(res.data)
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(res.data)
+        }
         this.toots = res.data
         this.loading = false
+        window.ga('send', 'event', 'Toots', 'load', this.domain)
       }).catch((err) => {
         this.error = err.message
       })
@@ -106,8 +134,10 @@ export default {
       Promise.resolve().then(() => {
         const url = this.currentUri
         url.searchParams.delete('since_id')
-        url.searchParams.append('max_id', this.toots[this.toots.length - 1].id)
-        console.log(url.href)
+        url.searchParams.set('max_id', this.toots[this.toots.length - 1].id)
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(url.href)
+        }
         return axios.get(url.href)
       }).then((res) => {
         this.toots.push(...res.data)
@@ -116,6 +146,13 @@ export default {
         this.error = err.message
         this.loading = false
       })
+    },
+    instanceSelected (name) {
+      this.domain = name
+      this.submit()
+    },
+    inputDomain () {
+      this.suggestEnabled = true
     }
   }
 }
