@@ -60,10 +60,12 @@
     }
 </style>
 <script>
-  import * as striptags from 'striptags'
+  import striptags from 'striptags'
   export default {
     props: {
-      toot: Object
+      toot: {
+        type: Object, required: true
+      }
     },
     data () {
       return {
