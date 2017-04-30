@@ -9,7 +9,7 @@
             <div style="width: 100%">
                 <div class="d-flex toot-header">
                     <a :href="toot.account.url" :title="toot.account.note">
-                        <div>{{toot.account.display_name}} @{{toot.account.username}}</div>
+                        <div>{{toot.account.display_name}} @{{toot.account.acct}}</div>
                     </a>
                     <a :href="toot.url" class="ml-auto text-right date">{{date}}</a>
                 </div>
