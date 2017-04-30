@@ -8,7 +8,7 @@
             </div>
             <div style="width: 100%">
                 <div class="d-flex toot-header">
-                    <a :href="toot.account.url" :title="toot.account.note">
+                    <a :href="toot.account.url" :title="note">
                         <div>{{toot.account.display_name}} @{{toot.account.acct}}</div>
                     </a>
                     <a :href="toot.url" class="ml-auto text-right date">{{date}}</a>
@@ -60,6 +60,7 @@
     }
 </style>
 <script>
+  import * as striptags from 'striptags'
   export default {
     props: {
       toot: Object
@@ -72,7 +73,10 @@
     computed: {
       date () {
         const date = new Date(this.toot.created_at)
-        return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+        return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${`00${date.getMinutes()}`.slice(-2)}:${`0${date.getSeconds()}`.slice(-2)}`
+      },
+      note () {
+        return striptags(this.toot.account.note.replace(/<br(?: \/)?>/g, '\n'))
       }
     }
   }
