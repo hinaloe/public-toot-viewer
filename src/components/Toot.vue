@@ -13,7 +13,7 @@
                     </a>
                     <a :href="toot.url" class="ml-auto text-right date">{{date}}</a>
                 </div>
-                <p v-if="toot.spoiler_text">{{toot.spoiler_text}} 
+                <p v-if="toot.spoiler_text">{{toot.spoiler_text}}
                     <button @click.prevent="more=true" class="btn btn-outline-primary btn-sm" v-if="!more">
                         Read more...
                     </button>
