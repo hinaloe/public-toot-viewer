@@ -1,6 +1,6 @@
 <template>
     <div class="card mb-3">
-        <div class="card-block d-flex">
+        <div class="card-body d-flex">
             <div style="width: 90px;margin-right: 20px">
                 <a :href="toot.account.url">
                     <img :src="toot.account.avatar" alt="avatar" style="border-radius: 50%;width: 100%">
@@ -36,17 +36,16 @@
         </div>
     </div>
 </template>
-<style>
-    .card .invisible {
+<style scoped="scoped">
+    .card {
+        word-break: break-all;
+    }
+
+    .card >>> .invisible {
         width: 0;
         height: 0;
         visibility: hidden;
         display: inline-flex;
-    }
-</style>
-<style scoped="scoped">
-    .card {
-        word-break: break-all;
     }
 
     .sensitive {
