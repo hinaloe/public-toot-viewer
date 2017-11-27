@@ -1,5 +1,5 @@
 <template>
-    <div class="card mb-3">
+    <article class="card mb-3">
         <div class="card-body d-flex">
             <div style="width: 90px;margin-right: 20px">
                 <a :href="toot.account.url">
@@ -21,7 +21,7 @@
                         Close
                     </button>
                 </p>
-                <div v-html="toot.content" v-if="!toot.spoiler_text||more"></div>
+                <div v-html="content" v-if="!toot.spoiler_text||more" class="content"></div>
                 <div v-if="toot.media_attachments.length">
                     <div v-if="toot.sensitive && !allowSensitive" class="text-center sensitive" @click="allowSensitive=true">
                         Sensitive content (click to show)
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </article>
 </template>
 <style scoped="scoped">
     .card {
@@ -69,9 +69,19 @@
         font-size: .8em;
         color: #626262;
     }
+
+    .content >>> .inline-emoji {
+        display: inline-block;
+        height: 24px;
+        width: 24px;
+        vertical-align: middle;
+        object-fit: contain;
+    }
 </style>
 <script>
   import striptags from 'striptags'
+  import sanitize from 'sanitize-html'
+
   export default {
     props: {
       toot: {
@@ -91,6 +101,38 @@
       },
       note () {
         return striptags(this.toot.account.note.replace(/<br(?: \/)?>/g, '\n'))
+      },
+      content () {
+        /** @type {String} sanitized */
+        let sanitized = sanitize(this.toot.content, {
+          allowedTags: ['h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+            'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
+            'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'span'],
+          allowedAttributes: {
+            a: ['href', 'target'],
+            // We don't currently allow img itself by default, but this
+            // would make sense if we did
+            img: ['src', 'alt'],
+            '*': ['class', 'title', 'rel']
+          }
+        })
+
+        if (Array.isArray(this.toot.emojis) && this.toot.emojis.length) {
+          for (const emoji of this.toot.emojis) {
+            if (!emoji.shortcode || !emoji.url || !this.validateShortCode(emoji.shortcode)) {
+              debugger
+              break
+            }
+            sanitized = sanitized.replace(new RegExp(`:${emoji.shortcode}:`, 'g'), `<img src="${emoji.url}" draggable="false" alt=":${emoji.shortcode}:" title=":${emoji.shortcode}:" class="inline-emoji">`)
+          }
+        }
+
+        return sanitized
+      }
+    },
+    methods: {
+      validateShortCode (name) {
+        return /^[a-zA-Z0-9_]+$/.test(name)
       }
     }
   }
