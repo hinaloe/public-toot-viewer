@@ -48,6 +48,10 @@
         display: inline-flex;
     }
 
+    .card >>> .ellipsis::after {
+        content: '…';
+    }
+
     .sensitive {
         width: 100%;
         background: #303030;
