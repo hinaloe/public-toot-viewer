@@ -44,8 +44,11 @@
     .card >>> .invisible {
         width: 0;
         height: 0;
-        visibility: hidden;
+        visibility: initial!important;
         display: inline-flex;
+        font-size: 0;
+        line-height: 0;
+        position: absolute;
     }
 
     .card >>> .ellipsis::after {
