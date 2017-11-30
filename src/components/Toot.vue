@@ -128,8 +128,7 @@
         if (Array.isArray(this.toot.emojis) && this.toot.emojis.length) {
           for (const emoji of this.toot.emojis) {
             if (!emoji.shortcode || !emoji.url || !this.validateShortCode(emoji.shortcode)) {
-              debugger
-              break
+              continue
             }
             sanitized = sanitized.replace(new RegExp(`:${emoji.shortcode}:`, 'g'), `<img src="${emoji.url}" draggable="false" alt=":${emoji.shortcode}:" title=":${emoji.shortcode}:" class="inline-emoji">`)
           }
