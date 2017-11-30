@@ -9,7 +9,7 @@
             <div style="width: 100%">
                 <div class="d-flex toot-header">
                     <a :href="toot.account.url" :title="note">
-                        <div>{{toot.account.display_name}} @{{toot.account.acct}}</div>
+                        <div><span class="name">{{toot.account.display_name}}</span> <span class="acct">@{{toot.account.acct}}</span></div>
                     </a>
                     <a :href="toot.url" class="ml-auto text-right date">{{date}}</a>
                 </div>
@@ -70,6 +70,11 @@
     }
     .toot-header .date {
         font-size: .8em;
+        color: #626262;
+    }
+
+    .acct {
+        font-size: .9em;
         color: #626262;
     }
 
