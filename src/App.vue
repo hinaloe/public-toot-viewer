@@ -87,6 +87,12 @@ export default {
     }).catch(err => {
       this.error = err.message
     })
+    const url = new URL(location.href)
+    if (url.searchParams.has('domain')) {
+      this.domain = url.searchParams.get('domain')
+      this.local = url.searchParams.has('local') && !['false', '', '0', 'no'].includes(url.searchParams.get('local'))
+      this.submit()
+    }
   },
   computed: {
     filteredInstances () {
@@ -124,6 +130,7 @@ export default {
         }
         this.toots = res.data
         this.loading = false
+        this.updateSearchParams()
         window.ga('send', 'event', 'Toots', 'load', this.domain)
       }).catch((err) => {
         this.error = err.message
@@ -153,6 +160,12 @@ export default {
     },
     inputDomain () {
       this.suggestEnabled = true
+    },
+    updateSearchParams () {
+      const to = `?domain=${this.domain}&local=${this.local.toString()}`
+      if (location.search !== to) {
+        history.pushState(null, null, to)
+      }
     }
   }
 }
