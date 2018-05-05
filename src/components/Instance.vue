@@ -10,9 +10,9 @@
     </a>
 </template>
 <script>
-    export default {
-      props: {
-        instance: Object
-      }
-    }
+export default {
+  props: {
+    instance: Object
+  }
+}
 </script>
