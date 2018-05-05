@@ -76,7 +76,7 @@ export default {
         })
       }
     }, 30000)
-    axios.get('https://instances.mastodon.xyz/instances.json').then(res => {
+    axios.get('https://instances.social/instances.json').then(res => {
       if (!Array.isArray(res.data)) {
         return Promise.reject(new Error('Invalid response'))
       }
