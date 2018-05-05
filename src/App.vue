@@ -10,7 +10,7 @@
       <div class="alert alert-warning" v-if="error">{{error}}</div>
         <form action="/" method="post" @submit.prevent="submit">
             <div class="form-group row">
-                <label for="domain" class="col-4 col-md-2">Domain</label>
+                <label for="domain" class="col-4 col-md-2 col-form-label">Domain</label>
                 <div class="col-8 col-md-4">
                     <input type="text" class="form-control" placeholder="mstdn.jp" id="domain" v-model="domain" @input="inputDomain">
                     <div class="dropdown-menu" style="display: block;right: 0" v-show="suggestEnabled && filteredInstances.length">
@@ -19,11 +19,10 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <input type="submit" class="btn btn-primary" value="Load">
-                    <label class="custom-control custom-checkbox ml-3">
-                        <input type="checkbox" class="custom-control-input" v-model="local">
-                        <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">Local</span>
-                    </label>
+                    <div class="custom-control custom-checkbox custom-control-inline ml-3">
+                        <input type="checkbox" class="custom-control-input" id="is-local" v-model="local">
+                        <label class="custom-control-label" for="is-local">Local</label>
+                    </div>
 
                 </div>
             </div>
