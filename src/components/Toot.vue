@@ -21,17 +21,17 @@
                         Close
                     </button>
                 </p>
-                <div v-html="content" v-if="!toot.spoiler_text||more" class="content"></div>
-                <div v-if="toot.media_attachments.length">
-                    <div v-if="toot.sensitive && !allowSensitive" class="text-center sensitive" @click="allowSensitive=true">
-                        Sensitive content (click to show)
-                    </div>
-                    <div v-else>
-                        <a :href="media.url" v-for="media in toot.media_attachments">
-                            <img :src="media.preview_url" alt="" class="img-fluid img-thumbnail">
-                        </a>
-                    </div>
+              <div v-html="content" v-if="!toot.spoiler_text||more" class="content"></div>
+              <div v-if="toot.media_attachments.length">
+                <div v-if="toot.sensitive && !allowSensitive" class="text-center sensitive" @click="allowSensitive=true">
+                  Sensitive content (click to show)
                 </div>
+                <div v-else>
+                  <a :href="media.url" v-for="media in toot.media_attachments" :key="media.id">
+                    <img :src="media.preview_url" alt="" class="img-fluid img-thumbnail">
+                  </a>
+                </div>
+              </div>
             </div>
         </div>
     </article>
@@ -87,60 +87,60 @@
     }
 </style>
 <script>
-  import striptags from 'striptags'
-  import sanitize from 'sanitize-html'
+import striptags from 'striptags'
+import sanitize from 'sanitize-html'
 
-  export default {
-    props: {
-      toot: {
-        type: Object, required: true
-      }
+export default {
+  props: {
+    toot: {
+      type: Object, required: true
+    }
+  },
+  data () {
+    return {
+      allowSensitive: false,
+      more: false
+    }
+  },
+  computed: {
+    date () {
+      const date = new Date(this.toot.created_at)
+      return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${`00${date.getMinutes()}`.slice(-2)}:${`0${date.getSeconds()}`.slice(-2)}`
     },
-    data () {
-      return {
-        allowSensitive: false,
-        more: false
-      }
+    note () {
+      return striptags(this.toot.account.note.replace(/<br(?: \/)?>/g, '\n'))
     },
-    computed: {
-      date () {
-        const date = new Date(this.toot.created_at)
-        return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${`00${date.getMinutes()}`.slice(-2)}:${`0${date.getSeconds()}`.slice(-2)}`
-      },
-      note () {
-        return striptags(this.toot.account.note.replace(/<br(?: \/)?>/g, '\n'))
-      },
-      content () {
-        /** @type {String} sanitized */
-        let sanitized = sanitize(this.toot.content, {
-          allowedTags: ['h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
-            'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
-            'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'span'],
-          allowedAttributes: {
-            a: ['href', 'target'],
-            // We don't currently allow img itself by default, but this
-            // would make sense if we did
-            img: ['src', 'alt'],
-            '*': ['class', 'title', 'rel']
-          }
-        })
-
-        if (Array.isArray(this.toot.emojis) && this.toot.emojis.length) {
-          for (const emoji of this.toot.emojis) {
-            if (!emoji.shortcode || !emoji.url || !this.validateShortCode(emoji.shortcode)) {
-              continue
-            }
-            sanitized = sanitized.replace(new RegExp(`:${emoji.shortcode}:`, 'g'), `<img src="${emoji.url}" draggable="false" alt=":${emoji.shortcode}:" title=":${emoji.shortcode}:" class="inline-emoji">`)
-          }
+    content () {
+      /** @type {String} sanitized */
+      let sanitized = sanitize(this.toot.content, {
+        allowedTags: ['h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+          'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
+          'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'span'],
+        allowedAttributes: {
+          a: ['href', 'target'],
+          // We don't currently allow img itself by default, but this
+          // would make sense if we did
+          img: ['src', 'alt'],
+          '*': ['class', 'title', 'rel']
         }
+      })
 
-        return sanitized
+      if (Array.isArray(this.toot.emojis) && this.toot.emojis.length) {
+        for (const emoji of this.toot.emojis) {
+          if (!emoji.shortcode || !emoji.url || !this.validateShortCode(emoji.shortcode)) {
+            continue
+          }
+          sanitized = sanitized.replace(new RegExp(`:${emoji.shortcode}:`, 'g'), `<img src="${emoji.url}" draggable="false" alt=":${emoji.shortcode}:" title=":${emoji.shortcode}:" class="inline-emoji">`)
+        }
       }
-    },
-    methods: {
-      validateShortCode (name) {
-        return /^[a-zA-Z0-9_]+$/.test(name)
-      }
+
+      return sanitized
+    }
+  },
+  methods: {
+    validateShortCode (name) {
+      return /^[a-zA-Z0-9_]+$/.test(name)
     }
   }
+}
 </script>
