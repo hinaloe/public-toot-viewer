@@ -12,7 +12,7 @@ describe('Toot', () => {
       'sensitive': false,
       'spoiler_text': '',
       'visibility': 'public',
-      'application': {'name': 'Web', 'website': null},
+      'application': { 'name': 'Web', 'website': null },
       'account': {
         'id': 42621,
         'username': 'mikamiyoh',
@@ -40,7 +40,7 @@ describe('Toot', () => {
       'favourites_count': 0,
       'reblog': null
     }
-    const vm = new Constructor({propsData: {toot}}).$mount()
+    const vm = new Constructor({ propsData: { toot } }).$mount()
     expect((vm instanceof Vue)).to.equal(true)
     expect(vm.$el.querySelector('.toot-header a div').textContent)
       .to.equal('三上洋 @mikamiyoh')
