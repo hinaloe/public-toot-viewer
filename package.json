@@ -17,7 +17,7 @@
     "bootstrap": "^4.2.1",
     "sanitize-html": "^1.16.1",
     "striptags": "^2.2",
-    "vue": "^2.5.9"
+    "vue": "^2.5.22"
   },
   "devDependencies": {
     "autoprefixer": "^8.6.5",
@@ -76,7 +76,7 @@
     "url-loader": "^1.0.1",
     "vue-loader": "^14.0.0",
     "vue-style-loader": "^4.1.0",
-    "vue-template-compiler": "^2.5.9",
+    "vue-template-compiler": "^2.5.22",
     "webpack": "^3.8.1",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-dev-middleware": "^2.0.0",
