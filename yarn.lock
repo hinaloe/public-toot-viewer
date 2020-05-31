@@ -3945,10 +3945,10 @@ inherits@2.0.3:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
-inject-loader@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/inject-loader/-/inject-loader-3.0.1.tgz#844a4596150cf6b864c2f79806d40a2caee4c2c7"
-  integrity sha512-0Kd4NqMJUhknG4ECiJ/mgyHJBpfBBWZ3IKHl2BLNQiFtMO7/xiv9mmHl7mGvE0iKrBeQAZdMcQP3sMXZN0cqeg==
+inject-loader@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/inject-loader/-/inject-loader-4.0.1.tgz#079c7c1c28950cf28b8d97714dfae6212938e52a"
+  integrity sha512-fUFtHkso2AnzQyyJjuGuDYL0mW2EIQUlS4MgXXmCIRjVLyDk3oXGJqNcSTUg6DGs1q4gvqVIWsxfmPKxF44xfw==
   dependencies:
     babel-core "~6"
 
