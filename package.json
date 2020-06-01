@@ -81,8 +81,8 @@
     "webpack-merge": "^4.1.0"
   },
   "engines": {
-    "node": ">= 4.0.0",
-    "npm": ">= 3.0.0"
+    "node": ">= 10.0.0",
+    "yarn": ">= 1.17.0"
   },
   "browserslist": [
     "> 1%",
