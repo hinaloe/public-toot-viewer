@@ -14,6 +14,13 @@ var versionRequirements = [
   },
 ]
 
+if (shell.which('yarn')) {
+  versionRequirements.push({
+    name: 'yarn',
+    currentVersion: exec('yarn --version'),
+    versionRequirement: packageConfig.engines.yarn
+  })
+}
 
 module.exports = function () {
   var warnings = []
