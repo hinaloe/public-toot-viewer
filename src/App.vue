@@ -1,39 +1,98 @@
 <template>
   <div id="app">
     <div class="container">
-        <h1>PTL Viewer</h1>
-        <p class="lead">
-            マストドンの公開タイムラインをみるやつ。inspired by <a href="http://junk.azyobuzi.net/mastodonptl/">junk.azyobuzi.net/mastodonptl/</a>
-        </p>
-        <p>github: <a href="https://github.com/hinaloe/public-toot-viewer"><span class="hidden-xs-down">hinaloe/</span>public-toot-viewer</a> by <a
-                href="https://github.com/hinaloe/">hinaloe</a> on <a href="https://mdn.hinaloe.net">ひな丼</a></p>
-      <div class="alert alert-warning" v-if="error">{{error}}</div>
-        <form action="/" method="post" @submit.prevent="submit">
-            <div class="form-group row">
-                <label for="domain" class="col-4 col-md-2 col-form-label">Domain</label>
-                <div class="col-8 col-md-4">
-                    <input type="text" class="form-control" placeholder="mstdn.jp" id="domain" v-model="domain" @input="inputDomain">
-                    <div class="dropdown-menu" style="display: block;right: 0" v-show="suggestEnabled && filteredInstances.length">
-                        <instance :instance="instance" v-for="instance in filteredInstances" :key="instance.name" @selected="instanceSelected">err</instance>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6">
-                    <input type="submit" class="btn btn-primary" value="Load">
-                    <div class="custom-control custom-checkbox custom-control-inline ml-3">
-                        <input type="checkbox" class="custom-control-input" id="is-local" v-model="local">
-                        <label class="custom-control-label" for="is-local">Local</label>
-                    </div>
-
-                </div>
+      <h1>PTL Viewer</h1>
+      <p class="lead">
+        マストドンの公開タイムラインをみるやつ。inspired by <a href="http://junk.azyobuzi.net/mastodonptl/">junk.azyobuzi.net/mastodonptl/</a>
+      </p>
+      <p>
+        github: <a href="https://github.com/hinaloe/public-toot-viewer"><span class="hidden-xs-down">hinaloe/</span>public-toot-viewer</a> by <a
+          href="https://github.com/hinaloe/"
+        >hinaloe</a> on <a href="https://mdn.hinaloe.net">ひな丼</a>
+      </p>
+      <div
+        v-if="error"
+        class="alert alert-warning"
+      >
+        {{ error }}
+      </div>
+      <form
+        action="/"
+        method="post"
+        @submit.prevent="submit"
+      >
+        <div class="form-group row">
+          <label
+            for="domain"
+            class="col-4 col-md-2 col-form-label"
+          >Domain</label>
+          <div class="col-8 col-md-4">
+            <input
+              id="domain"
+              v-model="domain"
+              type="text"
+              class="form-control"
+              placeholder="mstdn.jp"
+              @input="inputDomain"
+            >
+            <div
+              v-show="suggestEnabled && filteredInstances.length"
+              class="dropdown-menu"
+              style="display: block;right: 0"
+            >
+              <instance
+                v-for="instance in filteredInstances"
+                :key="instance.name"
+                :instance="instance"
+                @selected="instanceSelected"
+              >
+                err
+              </instance>
             </div>
-        </form>
-        <div>
-            <div v-for="toot in toots" :key="toot.id">
-                <Toot :toot="toot"></Toot>
+          </div>
+          <div class="col-12 col-md-6">
+            <input
+              type="submit"
+              class="btn btn-primary"
+              value="Load"
+            >
+            <div class="custom-control custom-checkbox custom-control-inline ml-3">
+              <input
+                id="is-local"
+                v-model="local"
+                type="checkbox"
+                class="custom-control-input"
+              >
+              <label
+                class="custom-control-label"
+                for="is-local"
+              >Local</label>
             </div>
-            <div class="text-center pb-3 more" v-if="currentUri && !loading" @click.prevent="loadMore" style="cursor: pointer">more</div>
-            <div v-else-if="loading" class="text-center pb-3">Loading...</div>
+          </div>
         </div>
+      </form>
+      <div>
+        <div
+          v-for="toot in toots"
+          :key="toot.id"
+        >
+          <Toot :toot="toot" />
+        </div>
+        <div
+          v-if="currentUri && !loading"
+          class="text-center pb-3 more"
+          style="cursor: pointer"
+          @click.prevent="loadMore"
+        >
+          more
+        </div>
+        <div
+          v-else-if="loading"
+          class="text-center pb-3"
+        >
+          Loading...
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -44,6 +103,10 @@ import Instance from './components/Instance.vue'
 import axios from 'axios'
 
 export default {
+  name: 'App',
+  components: {
+    Toot, Instance
+  },
   data () {
     return {
       toots: [],
@@ -56,9 +119,10 @@ export default {
       error: ''
     }
   },
-  name: 'app',
-  components: {
-    Toot, Instance
+  computed: {
+    filteredInstances () {
+      return this.instances.filter(instance => String.includes(instance.name, this.domain)).slice(0, 6)
+    }
   },
   mounted () {
     if (!window.URLSearchParams) {
@@ -91,11 +155,6 @@ export default {
       this.domain = url.searchParams.get('domain')
       this.local = url.searchParams.has('local') && !['false', '', '0', 'no'].includes(url.searchParams.get('local'))
       this.submit()
-    }
-  },
-  computed: {
-    filteredInstances () {
-      return this.instances.filter(instance => String.includes(instance.name, this.domain)).slice(0, 6)
     }
   },
   methods: {

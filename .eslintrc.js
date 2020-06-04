@@ -11,7 +11,7 @@ module.exports = {
   },
   // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
   extends: [
-    'plugin:vue/essential',
+    'plugin:vue/recommended',
     'standard',
   ],
   // required to lint *.vue files

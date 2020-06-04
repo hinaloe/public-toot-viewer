@@ -1,40 +1,77 @@
 <template>
-    <article class="card mb-3">
-        <div class="card-body d-flex">
-            <div style="width: 90px;margin-right: 20px">
-                <a :href="toot.account.url">
-                    <img :src="toot.account.avatar" alt="avatar" style="border-radius: 50%;width: 100%">
-                </a>
-            </div>
-            <div style="width: 100%">
-                <div class="d-flex toot-header">
-                    <a :href="toot.account.url" :title="note">
-                        <div><span class="name">{{toot.account.display_name}}</span> <span class="acct">@{{toot.account.acct}}</span></div>
-                    </a>
-                    <a :href="toot.url" class="ml-auto text-right date">{{date}}</a>
-                </div>
-                <p v-if="toot.spoiler_text">{{toot.spoiler_text}}
-                    <button @click.prevent="more=true" class="btn btn-outline-primary btn-sm" v-if="!more">
-                        Read more...
-                    </button>
-                    <button @click.prevent="more=false" class="btn btn-outline-secondary btn-sm" v-else>
-                        Close
-                    </button>
-                </p>
-              <div v-html="content" v-if="!toot.spoiler_text||more" class="content"></div>
-              <div v-if="toot.media_attachments.length">
-                <div v-if="toot.sensitive && !allowSensitive" class="text-center sensitive" @click="allowSensitive=true">
-                  Sensitive content (click to show)
-                </div>
-                <div v-else>
-                  <a :href="media.url" v-for="media in toot.media_attachments" :key="media.id">
-                    <img :src="media.preview_url" alt="" class="img-fluid img-thumbnail">
-                  </a>
-                </div>
-              </div>
-            </div>
+  <article class="card mb-3">
+    <div class="card-body d-flex">
+      <div style="width: 90px;margin-right: 20px">
+        <a :href="toot.account.url">
+          <img
+            :src="toot.account.avatar"
+            alt="avatar"
+            style="border-radius: 50%;width: 100%"
+          >
+        </a>
+      </div>
+      <div style="width: 100%">
+        <div class="d-flex toot-header">
+          <a
+            :href="toot.account.url"
+            :title="note"
+          >
+            <div><span class="name">{{ toot.account.display_name }}</span> <span class="acct">@{{ toot.account.acct }}</span></div>
+          </a>
+          <a
+            :href="toot.url"
+            class="ml-auto text-right date"
+          >{{ date }}</a>
         </div>
-    </article>
+        <p v-if="toot.spoiler_text">
+          {{ toot.spoiler_text }}
+          <button
+            v-if="!more"
+            class="btn btn-outline-primary btn-sm"
+            @click.prevent="more=true"
+          >
+            Read more...
+          </button>
+          <button
+            v-else
+            class="btn btn-outline-secondary btn-sm"
+            @click.prevent="more=false"
+          >
+            Close
+          </button>
+        </p>
+        <!-- eslint-disable vue/no-v-html -->
+        <div
+          v-if="!toot.spoiler_text||more"
+          class="content"
+          v-html="content"
+        />
+        <!-- eslint-enable vue/no-v-html -->
+        <div v-if="toot.media_attachments.length">
+          <div
+            v-if="toot.sensitive && !allowSensitive"
+            class="text-center sensitive"
+            @click="allowSensitive=true"
+          >
+            Sensitive content (click to show)
+          </div>
+          <div v-else>
+            <a
+              v-for="media in toot.media_attachments"
+              :key="media.id"
+              :href="media.url"
+            >
+              <img
+                :src="media.preview_url"
+                alt=""
+                class="img-fluid img-thumbnail"
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
 </template>
 <style scoped="scoped">
     .card {
