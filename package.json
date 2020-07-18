@@ -63,7 +63,7 @@
     "mocha": "^8.0.1",
     "open": "^7.0.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
-    "ora": "^4.0.4",
+    "ora": "^4.0.5",
     "rimraf": "^3.0.2",
     "semver": "^7.3.2",
     "shelljs": "^0.8.4",
