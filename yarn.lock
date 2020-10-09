@@ -2161,10 +2161,10 @@ copy-webpack-plugin@^4.0.1:
     p-limit "^1.0.0"
     serialize-javascript "^1.4.0"
 
-core-js@^2.4.0, core-js@^2.5.0:
-  version "2.5.5"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.5.tgz#b14dde936c640c0579a6b50cabcc132dd6127e3b"
-  integrity sha1-sU3ek2xkDAV5prUMq8wTLdYSfjs=
+core-js@^2.4.0, core-js@^2.5.0, core-js@^2.6.11:
+  version "2.6.11"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
+  integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
 
 core-util-is@~1.0.0:
   version "1.0.2"
@@ -7900,12 +7900,13 @@ tapable@^1.0.0:
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-1.0.0.tgz#cbb639d9002eed9c6b5975eb20598d7936f1f9f2"
   integrity sha512-dQRhbNQkRnaqauC7WqSJ21EEksgT0fYZX2lqXzGkpo8JNig9zGZTYoMGvyI2nWmXlE2VSVXVDu7wLVGu/mQEsg==
 
-terser-webpack-plugin-legacy@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/terser-webpack-plugin-legacy/-/terser-webpack-plugin-legacy-1.2.4.tgz#9c8fb15b332cf01a786d3ce204131f560d82229f"
-  integrity sha512-a94K3oIigtnD0K5ZucLf+OWxbSBQDTVHlMmB92cyjkkQnxqWUvOFManrPjSIRZWYkOa4d0uyQ3yAMIggDumDng==
+terser-webpack-plugin-legacy@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/terser-webpack-plugin-legacy/-/terser-webpack-plugin-legacy-1.2.5.tgz#1a6bbea806742a979111091afde7fb331a97f13a"
+  integrity sha512-hAoKjlQaUM21gUH9cwpzA67dbYInKwD6ovKa6qO5c3Fh3iV4Rij8NrD/pRub8EmxoY/0xTJQ5kWjC3hSs7bvwQ==
   dependencies:
     cacache "^11.0.2"
+    core-js "^2.6.11"
     find-cache-dir "^2.0.0"
     schema-utils "^1.0.0"
     serialize-javascript "^4.0.0"
