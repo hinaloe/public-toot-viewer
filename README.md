@@ -1,6 +1,6 @@
 # Public toot viewer
 
-マストドンの公開タイムラインをみるやつ。inspired by http://junk.azyobuzi.net/mastodonptl/
+マストドンの公開タイムラインをみるやつ。inspired by https://junk.azyobuzi.net/mastodonptl/
 
 https://m6n-view.hnle.tk/
 
