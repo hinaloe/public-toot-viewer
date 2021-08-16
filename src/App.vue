@@ -105,7 +105,7 @@ import axios from 'axios'
 export default {
   name: 'App',
   components: {
-    Toot, Instance
+    Toot, Instance,
   },
   data () {
     return {
@@ -116,13 +116,13 @@ export default {
       local: false,
       loading: false,
       currentUri: null,
-      error: ''
+      error: '',
     }
   },
   computed: {
     filteredInstances () {
       return this.instances.filter(instance => String.includes(instance.name, this.domain)).slice(0, 6)
-    }
+    },
   },
   mounted () {
     if (!window.URLSearchParams) {
@@ -224,8 +224,8 @@ export default {
       if (location.search !== to) {
         history.pushState(null, null, to)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

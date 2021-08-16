@@ -21,8 +21,8 @@ export default {
   props: {
     instance: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>

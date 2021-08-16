@@ -130,13 +130,13 @@ import sanitize from 'sanitize-html'
 export default {
   props: {
     toot: {
-      type: Object, required: true
-    }
+      type: Object, required: true,
+    },
   },
   data () {
     return {
       allowSensitive: false,
-      more: false
+      more: false,
     }
   },
   computed: {
@@ -158,8 +158,8 @@ export default {
           // We don't currently allow img itself by default, but this
           // would make sense if we did
           img: ['src', 'alt'],
-          '*': ['class', 'title', 'rel']
-        }
+          '*': ['class', 'title', 'rel'],
+        },
       })
 
       if (Array.isArray(this.toot.emojis) && this.toot.emojis.length) {
@@ -172,12 +172,12 @@ export default {
       }
 
       return sanitized
-    }
+    },
   },
   methods: {
     validateShortCode (name) {
       return /^[a-zA-Z0-9_]+$/.test(name)
-    }
-  }
+    },
+  },
 }
 </script>

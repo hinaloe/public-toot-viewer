@@ -28,7 +28,7 @@ describe('Toot', () => {
         avatar: 'https://media.mstdn.jp/images/accounts/avatars/000/042/621/original/b2b726b42455ea71.JPG',
         avatar_static: 'https://media.mstdn.jp/images/accounts/avatars/000/042/621/original/b2b726b42455ea71.JPG',
         header: '/headers/original/missing.png',
-        header_static: '/headers/original/missing.png'
+        header_static: '/headers/original/missing.png',
       },
       media_attachments: [],
       mentions: [],
@@ -38,7 +38,7 @@ describe('Toot', () => {
       url: 'https://mstdn.jp/@mikamiyoh/6069779',
       reblogs_count: 0,
       favourites_count: 0,
-      reblog: null
+      reblog: null,
     }
     const vm = new Constructor({ propsData: { toot } }).$mount()
     expect((vm instanceof Vue)).to.equal(true)
