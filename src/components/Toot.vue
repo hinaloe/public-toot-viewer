@@ -73,56 +73,6 @@
     </div>
   </article>
 </template>
-<style scoped="scoped">
-    .card {
-        word-break: break-all;
-    }
-
-    .card >>> .invisible {
-        width: 0;
-        height: 0;
-        visibility: initial!important;
-        display: inline-flex;
-        font-size: 0;
-        line-height: 0;
-        position: absolute;
-    }
-
-    .card >>> .ellipsis::after {
-        content: '…';
-    }
-
-    .sensitive {
-        width: 100%;
-        background: #303030;
-        color: aliceblue;
-        padding: 60px 30px;
-        word-break: keep-all;
-    }
-
-    @media screen and (max-width: 768px) {
-        .toot-header {
-            flex-direction: column;
-        }
-    }
-    .toot-header .date {
-        font-size: .8em;
-        color: #626262;
-    }
-
-    .acct {
-        font-size: .9em;
-        color: #626262;
-    }
-
-    .content >>> .inline-emoji {
-        display: inline-block;
-        height: 24px;
-        width: 24px;
-        vertical-align: middle;
-        object-fit: contain;
-    }
-</style>
 <script>
 import striptags from 'striptags'
 import sanitize from 'sanitize-html'
@@ -181,3 +131,53 @@ export default {
   },
 }
 </script>
+<style scoped="scoped">
+    .card {
+        word-break: break-all;
+    }
+
+    .card >>> .invisible {
+        width: 0;
+        height: 0;
+        visibility: initial!important;
+        display: inline-flex;
+        font-size: 0;
+        line-height: 0;
+        position: absolute;
+    }
+
+    .card >>> .ellipsis::after {
+        content: '…';
+    }
+
+    .sensitive {
+        width: 100%;
+        background: #303030;
+        color: aliceblue;
+        padding: 60px 30px;
+        word-break: keep-all;
+    }
+
+    @media screen and (max-width: 768px) {
+        .toot-header {
+            flex-direction: column;
+        }
+    }
+    .toot-header .date {
+        font-size: .8em;
+        color: #626262;
+    }
+
+    .acct {
+        font-size: .9em;
+        color: #626262;
+    }
+
+    .content >>> .inline-emoji {
+        display: inline-block;
+        height: 24px;
+        width: 24px;
+        vertical-align: middle;
+        object-fit: contain;
+    }
+</style>
