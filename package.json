@@ -65,7 +65,7 @@
     "ora": "^5.4.0",
     "rimraf": "^3.0.2",
     "semver": "^7.3.5",
-    "shelljs": "^0.8.4",
+    "shelljs": "^0.8.5",
     "sinon": "^11.1.2",
     "sinon-chai": "^3.7.0",
     "terser-webpack-plugin-legacy": "^1.2.5",
