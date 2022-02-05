@@ -177,9 +177,9 @@ export default {
         if (process.env.NODE_ENV !== 'production') {
           console.log(url.searchParams)
         }
-        url.searchParams.set('limit', 40)
+        url.searchParams.set('limit', '40')
         if (this.local) {
-          url.searchParams.append('local', true)
+          url.searchParams.append('local', 'true')
         }
         return axios.get(url.href)
       }).then(res => {
