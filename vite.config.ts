@@ -9,7 +9,7 @@ import legacy from '@vitejs/plugin-legacy'
 
 const alias = [
   { find: /^~/, replacement: '' },
-  { find: 'vue', replacement: 'vue/dist/vue.esm' },
+  // { find: 'vue', replacement: 'vue/dist/vue.runtime.esm.js' },
   {
     find: '@',
     replacement: resolve(__dirname, 'src'),
