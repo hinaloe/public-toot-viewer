@@ -10,18 +10,12 @@ https://m6n-view.hnle.tk/
 # install dependencies
 yarn install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:3000
 yarn dev
 
 # build for production with minification
 yarn build
 
-# build for production and view the bundle analyzer report
-yarn build --report
-
-# run unit tests
-yarn unit
-
-# run all tests
+# run tests
 yarn test
 ```
