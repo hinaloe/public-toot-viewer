@@ -12,6 +12,7 @@ module.exports = {
   // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
   extends: [
     'plugin:vue/recommended',
+    '@vue/eslint-config-typescript/recommended',
     // 'standard',
   ],
   // required to lint *.vue files
