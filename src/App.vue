@@ -98,8 +98,8 @@
 </template>
 
 <script>
-import Toot from './components/Toot.vue'
-import Instance from './components/Instance.vue'
+import Toot from './components/TootItem.vue'
+import Instance from './components/InstanceList.vue'
 import axios from 'axios'
 
 export default {
