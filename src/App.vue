@@ -40,14 +40,14 @@
               class="dropdown-menu"
               style="display: block;right: 0"
             >
-              <instance
+              <Instance
                 v-for="instance in filteredInstances"
                 :key="instance.name"
                 :instance="instance"
                 @selected="instanceSelected"
               >
                 err
-              </instance>
+              </Instance>
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -99,7 +99,7 @@
 
 <script>
 import Toot from './components/TootItem.vue'
-import Instance from './components/InstanceList.vue'
+import Instance from './components/InstanceListItem.vue'
 import axios from 'axios'
 
 export default {
