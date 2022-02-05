@@ -18,7 +18,7 @@ const alias = [
 
 
 export default defineConfig({
-  base: './',
+  base: '/',
   root: './',
   publicDir: './static',
   build: {
