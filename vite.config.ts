@@ -26,7 +26,7 @@ export default defineConfig({
   },
   resolve: {
     alias,
-    dedupe: ['vue-demi']
+    dedupe: ['vue-demi'],
   },
   plugins: [
     createVuePlugin({
@@ -38,7 +38,7 @@ export default defineConfig({
     legacy({
       targets: ['ie >= 11'],
       additionalLegacyPolyfills: ['regenerator-runtime/runtime']
-    })
+    }),
   ],
   optimizeDeps: {
     // exclude: ['axios'],
@@ -47,6 +47,7 @@ export default defineConfig({
     environment: 'happy-dom',
     setupFiles: [
       'vitest.setup.ts',
-    ]
+    ],
+    globalSetup: 'vitest.global-setup.ts',
   },
 })
