@@ -1,0 +1,16 @@
+// Vitest Snapshot v1
+
+exports[`Instance list item > should render Instance list item 1`] = `
+"<a href=\\"#\\" class=\\"dropdown-item\\">
+  <div class=\\"instance-name\\">mastodon.xyz</div>
+  <div><small>
+      <!----> 23922 users / connections: 18337 </small></div>
+</a>"
+`;
+
+exports[`Instance list item > should render Instance list item with DOWN status 1`] = `
+"<a href=\\"#\\" class=\\"dropdown-item\\">
+  <div class=\\"instance-name\\">physi.cc</div>
+  <div><small><b class=\\"text-danger\\">DOWN </b> users / connections: </small></div>
+</a>"
+`;

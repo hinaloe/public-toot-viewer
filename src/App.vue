@@ -40,14 +40,14 @@
               class="dropdown-menu"
               style="display: block;right: 0"
             >
-              <instance
+              <Instance
                 v-for="instance in filteredInstances"
                 :key="instance.name"
                 :instance="instance"
                 @selected="instanceSelected"
               >
                 err
-              </instance>
+              </Instance>
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -98,8 +98,8 @@
 </template>
 
 <script>
-import Toot from './components/Toot.vue'
-import Instance from './components/Instance.vue'
+import Toot from './components/TootItem.vue'
+import Instance from './components/InstanceListItem.vue'
 import axios from 'axios'
 
 export default {
@@ -121,7 +121,7 @@ export default {
   },
   computed: {
     filteredInstances () {
-      return this.instances.filter(instance => String.includes(instance.name, this.domain)).slice(0, 6)
+      return this.instances.filter(instance => instance.name.includes(this.domain)).slice(0, 6)
     },
   },
   mounted () {
@@ -159,7 +159,7 @@ export default {
   },
   methods: {
     getApiUri () {
-      const url = new URL(String.includes(this.domain, '://') ? this.domain : 'https://' + this.domain)
+      const url = new URL(this.domain.includes('://') ? this.domain : 'https://' + this.domain)
       url.pathname = '/api/v1/timelines/public'
       return url
     },
@@ -169,7 +169,7 @@ export default {
       this.loading = true
       this.suggestEnabled = false
       Promise.resolve().then(() => {
-        if (!String.includes(this.domain, '.')) {
+        if (!this.domain.includes('.')) {
           throw new Error('Invalid domain')
         }
         const url = this.getApiUri()
@@ -177,9 +177,9 @@ export default {
         if (process.env.NODE_ENV !== 'production') {
           console.log(url.searchParams)
         }
-        url.searchParams.set('limit', 40)
+        url.searchParams.set('limit', '40')
         if (this.local) {
-          url.searchParams.append('local', true)
+          url.searchParams.append('local', 'true')
         }
         return axios.get(url.href)
       }).then(res => {

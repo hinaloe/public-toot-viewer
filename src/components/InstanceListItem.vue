@@ -4,7 +4,7 @@
     href="#"
     @click.prevent="$emit('selected', instance.name)"
   >
-    <div>{{ instance.name }}</div>
+    <div class="instance-name">{{ instance.name }}</div>
     <div>
       <small>
         <b

@@ -1,9 +1,10 @@
-import Vue from 'vue'
-import Toot from '@/components/Toot'
+import Toot from '@/components/TootItem.vue'
+import {mount} from '@vue/test-utils'
+
+import {it, describe, expect} from 'vitest'
 
 describe('Toot', () => {
-  it('Toot render', () => {
-    const Constructor = Vue.extend(Toot)
+  it('should render Toot', () => {
     const toot = {
       id: 6069779,
       created_at: '2017-04-30T19:37:51.090Z',
@@ -40,9 +41,11 @@ describe('Toot', () => {
       favourites_count: 0,
       reblog: null,
     }
-    const vm = new Constructor({ propsData: { toot } }).$mount()
-    expect((vm instanceof Vue)).to.equal(true)
-    expect(vm.$el.querySelector('.toot-header a div').textContent)
+    const wrapper = mount(Toot, {propsData: {toot}})
+
+    expect(wrapper.html()).toMatchSnapshot()
+
+    expect(wrapper.element.querySelector('.toot-header a div')?.textContent)
       .to.equal('三上洋 @mikamiyoh')
   })
 })
