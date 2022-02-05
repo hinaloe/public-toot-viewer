@@ -23,17 +23,17 @@ describe('Instance list item', () => {
           "categories": [],
           "languages": [
               "en",
-              "fr"
+              "fr",
           ],
           "noOtherLanguages": false,
           "prohibitedContent": [
               "nudity_nocw",
               "pornography_nocw",
               "illegalContentLinks",
-              "spam"
+              "spam",
           ],
-          "otherProhibitedContent": []
-      }
+          "otherProhibitedContent": [],
+      },
   }
 
   const wrapper = mount(InstanceListItem, {propsData: {instance}})
@@ -56,7 +56,7 @@ describe('Instance list item', () => {
       "openRegistrations": null,
       "users": null,
       "statuses": null,
-      "connections": null
+      "connections": null,
   }
 
   const wrapper = mount(InstanceListItem, {propsData: {instance}})

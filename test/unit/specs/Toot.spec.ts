@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Toot from '@/components/TootItem.vue'
 import {mount} from '@vue/test-utils'
 
