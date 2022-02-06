@@ -16,13 +16,14 @@
     </div>
   </a>
 </template>
-<script>
-export default {
-  props: {
-    instance: {
-      type: Object,
-      required: true,
-    },
-  },
+<script setup lang="ts">
+type InstanceInfo = {
+  name: string
+  users: number
+  connections: number
+  up: boolean
+  [key: string]: unknown
 }
+
+defineProps<{instance: InstanceInfo}>()
 </script>
