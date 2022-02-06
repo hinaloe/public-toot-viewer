@@ -78,40 +78,60 @@ import striptags from 'striptags'
 import sanitize from 'sanitize-html'
 import { ref } from '@vue/composition-api'
 
+type Emoji = {
+  shortcode: string
+  url: string
+  static_url: string
+  visible_in_picker: boolean
+}
+
 type Account = {
-  id: number
+  id: `${number}`
   acct: string
   display_name: string
   url: string
   avatar: string
+  header: string
   note: string
-  [key: string]: string | number
+  followers_count: number
+  following_count: number
+  statuses_count: number
+  last_status_at: string
+  emojis: Emoji[]
+  fields?: {name: string, value:string, verified_at: string | null}[]
+  [key: string]: unknown
 }
+
 type Toot = {
-  id: number
+  id: `${number}`
   url: string
   account: Account
   content: string
   created_at: string
-  in_reply_to_id: number
-  in_reply_to_account_id: number
-  reblog: Toot
+  in_reply_to_id: Toot['id'] | null
+  in_reply_to_account_id?: Account['id'] | null
+  reblog: Toot | null
   sensitive: boolean
   spoiler_text: string
   visibility: string
   media_attachments: Array<{
-    id: number
+    id: `${number}`
     type: string
     url: string
     preview_url: string
     text_url: string
+    description: unknown
+    blurhash?: string|null
     meta: {
-      original: {
+      [sizeVar: 'original' | 'small' | string]: {
         width: number
         height: number
+        size: string
+        aspect: number
       }
     }
   }>
+  emojis: Emoji[]
   [key: string]: unknown
 }
 
