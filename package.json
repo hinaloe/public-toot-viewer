@@ -24,6 +24,7 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/google.analytics": "^0.0.42",
+    "@types/sanitize-html": "^2.6.2",
     "@vitejs/plugin-legacy": "^1.6.4",
     "@vue/eslint-config-typescript": "^10.0.0",
     "@vue/runtime-dom": "^3.2.29",
