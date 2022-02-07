@@ -44,7 +44,7 @@
     "vitest": "^0.2.7",
     "vue-demi": "^0.12.1",
     "vue-template-compiler": "^2.6.14",
-    "vue-tsc": "^0.31.1"
+    "vue-tsc": "^0.31.2"
   },
   "browserslist": [
     "> 1%",
