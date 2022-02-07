@@ -17,7 +17,7 @@
     "@vue/composition-api": "^1.4.6",
     "axios": "^0.25.0",
     "bootstrap": "^4.5.3",
-    "sanitize-html": "^2.3.2",
+    "sanitize-html": "^2.7.0",
     "striptags": "^3.2",
     "vue": "^2.6.14"
   },
