@@ -8,12 +8,16 @@ module.exports = {
   // },
   env: {
     browser: true,
+    node: true,
+    'vue/setup-compiler-macros': true,
+    es6: true,
   },
   // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
   extends: [
     'plugin:vue/recommended',
     '@vue/eslint-config-typescript/recommended',
-    // 'standard',
+    './.eslintrc-auto-import.json',
+      // 'standard',
   ],
   // required to lint *.vue files
   plugins: [
@@ -28,5 +32,7 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'comma-dangle': ['error', 'always-multiline'],
+    'no-undef': 'error',
   },
+  ignorePatterns: ['dist'],
 }

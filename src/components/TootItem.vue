@@ -76,7 +76,6 @@
 <script setup lang="ts">
 import striptags from 'striptags'
 import sanitize from 'sanitize-html'
-import { ref } from '@vue/composition-api'
 
 type Emoji = {
   shortcode: string
