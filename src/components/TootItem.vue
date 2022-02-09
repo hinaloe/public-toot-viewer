@@ -73,34 +73,80 @@
     </div>
   </article>
 </template>
-<script>
+<script setup lang="ts">
 import striptags from 'striptags'
 import sanitize from 'sanitize-html'
 
-export default {
-  props: {
-    toot: {
-      type: Object, required: true,
-    },
-  },
-  data () {
-    return {
-      allowSensitive: false,
-      more: false,
+type Emoji = {
+  shortcode: string
+  url: string
+  static_url: string
+  visible_in_picker: boolean
+}
+
+type Account = {
+  id: `${number}`
+  acct: string
+  display_name: string
+  url: string
+  avatar: string
+  header: string
+  note: string
+  followers_count: number
+  following_count: number
+  statuses_count: number
+  last_status_at: string
+  emojis: Emoji[]
+  fields?: {name: string, value:string, verified_at: string | null}[]
+  [key: string]: unknown
+}
+
+type Toot = {
+  id: `${number}`
+  url: string
+  account: Account
+  content: string
+  created_at: string
+  in_reply_to_id: Toot['id'] | null
+  in_reply_to_account_id?: Account['id'] | null
+  reblog: Toot | null
+  sensitive: boolean
+  spoiler_text: string
+  visibility: string
+  media_attachments: Array<{
+    id: `${number}`
+    type: string
+    url: string
+    preview_url: string
+    text_url: string
+    description: unknown
+    blurhash?: string|null
+    meta: {
+      [sizeVar: 'original' | 'small' | string]: {
+        width: number
+        height: number
+        size: string
+        aspect: number
+      }
     }
-  },
-  computed: {
-    date () {
-      const date = new Date(this.toot.created_at)
-      return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${`00${date.getMinutes()}`.slice(-2)}:${`0${date.getSeconds()}`.slice(-2)}`
-    },
-    note () {
-      return striptags(this.toot.account.note.replace(/<br(?: \/)?>/g, '\n'))
-    },
-    content () {
-      /** @type {String} sanitized */
-      let sanitized = sanitize(this.toot.content, {
-        allowedTags: ['h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+  }>
+  emojis: Emoji[]
+  [key: string]: unknown
+}
+
+const props = defineProps<{toot: Toot}>()
+
+const allowSensitive = ref(false)
+const more = ref(false)
+
+const note = striptags(props.toot.account.note?.replace(/<br(?: \/)?>/g, '\n'))
+
+const _date = new Date(props.toot.created_at)
+const date = `${_date.getFullYear()}/${_date.getMonth() + 1}/${_date.getDate()} ${_date.getHours()}:${`00${_date.getMinutes()}`.slice(-2)}:${`0${_date.getSeconds()}`.slice(-2)}`
+
+const content = (()=> {
+  let sanitized: string = sanitize(props.toot.content, {
+          allowedTags: ['h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
           'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
           'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'span'],
         allowedAttributes: {
@@ -109,26 +155,22 @@ export default {
           // would make sense if we did
           img: ['src', 'alt'],
           '*': ['class', 'title', 'rel'],
-        },
-      })
-
-      if (Array.isArray(this.toot.emojis) && this.toot.emojis.length) {
-        for (const emoji of this.toot.emojis) {
-          if (!emoji.shortcode || !emoji.url || !this.validateShortCode(emoji.shortcode)) {
-            continue
-          }
-          sanitized = sanitized.replace(new RegExp(`:${emoji.shortcode}:`, 'g'), `<img src="${emoji.url}" draggable="false" alt=":${emoji.shortcode}:" title=":${emoji.shortcode}:" class="inline-emoji">`)
-        }
+    },
+  })
+  if (Array.isArray(props.toot.emojis) && props.toot.emojis.length) {
+    for (const emoji of props.toot.emojis) {
+      if (!emoji.shortcode || !emoji.url || !validateShortCode(emoji.shortcode)) {
+        continue
       }
+      sanitized = sanitized.replace(new RegExp(`:${emoji.shortcode}:`, 'g'), `<img src="${emoji.url}" draggable="false" alt=":${emoji.shortcode}:" title=":${emoji.shortcode}:" class="inline-emoji">`)
+    }
+  }
 
-      return sanitized
-    },
-  },
-  methods: {
-    validateShortCode (name) {
-      return /^[a-zA-Z0-9_]+$/.test(name)
-    },
-  },
+  return sanitized
+})()
+
+function validateShortCode (name: string) {
+  return /^[a-zA-Z0-9_]+$/.test(name)
 }
 </script>
 <style scoped="scoped">
