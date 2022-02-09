@@ -266,10 +266,10 @@
     "@babel/helper-plugin-utils" "^7.16.7"
     "@babel/plugin-syntax-typescript" "^7.16.7"
 
-"@babel/standalone@^7.16.4":
-  version "7.17.1"
-  resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.17.1.tgz#fe62491d0ec6f442cba3895e6ec3fa6c61de129c"
-  integrity sha512-rNHDt0ESbXq6BZv89BaSB0nlfymx/X5ASndRM58xOkgOJ6+YuCq8R3//3QP1sLAY2m4exiCg4BFD53vCVFzBKw==
+"@babel/standalone@^7.16.12":
+  version "7.17.2"
+  resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.17.2.tgz#4c55936b181f230d0ba7c5c38e66b68713cdb114"
+  integrity sha512-Adjbjnlk0IBuBEldyuicdIeq1P/YI5nfm7HnOVd8blGDRetPW2NllESjlrItMKORWVuILWqKe10D+b8yEybeBA==
 
 "@babel/template@^7.16.7":
   version "7.16.7"
@@ -565,16 +565,16 @@
     "@typescript-eslint/types" "5.10.2"
     eslint-visitor-keys "^3.0.0"
 
-"@vitejs/plugin-legacy@^1.6.4":
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/@vitejs/plugin-legacy/-/plugin-legacy-1.6.4.tgz#36cf0cc10bd1f32902719d62c8f23c9d433eb3a8"
-  integrity sha512-geH2F3hTRN++E4n9NZ0JFumxIWUKqW4FA9PAgM7Q6RvUOUUYW4tlURhEmCBYfZSN24H/yX3mEolX+wFVErsAYQ==
+"@vitejs/plugin-legacy@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-legacy/-/plugin-legacy-1.7.0.tgz#c24d318d4cacc4252162531c71103517ec05a1e6"
+  integrity sha512-/aXOuxCqXHQLpCTb/qSdZR6lsFoVNuuw9FhSf1T1Rffya4bnXy7/+bpMmAobqcRUDhqg0hRWc1KiWd3B+pUHQg==
   dependencies:
-    "@babel/standalone" "^7.16.4"
-    core-js "^3.19.1"
+    "@babel/standalone" "^7.16.12"
+    core-js "^3.20.3"
     magic-string "^0.25.7"
     regenerator-runtime "^0.13.9"
-    systemjs "^6.11.0"
+    systemjs "^6.12.1"
 
 "@volar/code-gen@0.31.2":
   version "0.31.2"
@@ -1177,7 +1177,7 @@ convert-source-map@^1.6.0, convert-source-map@^1.7.0:
   dependencies:
     safe-buffer "~5.1.1"
 
-core-js@^3.19.1:
+core-js@^3.20.3:
   version "3.21.0"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.21.0.tgz#f479dbfc3dffb035a0827602dd056839a774aa71"
   integrity sha512-YUdI3fFu4TF/2WykQ2xzSiTQdldLB4KVuL9WeAy5XONZYt5Cun/fpQvctoKbCgvPhmzADeesTk/j2Rdx77AcKQ==
@@ -2890,7 +2890,7 @@ sync-rpc@^1.2.1:
   dependencies:
     get-port "^3.1.0"
 
-systemjs@^6.11.0:
+systemjs@^6.12.1:
   version "6.12.1"
   resolved "https://registry.yarnpkg.com/systemjs/-/systemjs-6.12.1.tgz#47cdd23a6ec9f1b01cf5b5f70562c8550da229d3"
   integrity sha512-hqTN6kW+pN6/qro6G9OZ7ceDQOcYno020zBQKpZQLsJhYTDMCMNfXi/Y8duF5iW+4WWZr42ry0MMkcRGpbwG2A==
