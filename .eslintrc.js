@@ -1,3 +1,5 @@
+require('@rushstack/eslint-patch/modern-module-resolution')
+
 // http://eslint.org/docs/user-guide/configuring
 
 module.exports = {
