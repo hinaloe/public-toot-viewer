@@ -35,7 +35,7 @@
     "happy-dom": "^2.49.0",
     "regenerator-runtime": "^0.13.9",
     "typescript": "^4.6.2",
-    "unplugin-vue2-script-setup": "^0.10.0",
+    "unplugin-vue2-script-setup": "^0.10.1",
     "vite": "^2.8.6",
     "vite-plugin-inspect": "^0.4.3",
     "vite-plugin-package-config": "^0.1.1",
