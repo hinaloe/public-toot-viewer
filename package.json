@@ -14,7 +14,7 @@
     "lint": "eslint --ext .js,.vue,.ts src test/unit/"
   },
   "dependencies": {
-    "@vue/composition-api": "^1.4.9",
+    "@vue/composition-api": "^1.6.0",
     "axios": "^0.26.1",
     "bootstrap": "^4.5.3",
     "sanitize-html": "^2.7.0",
