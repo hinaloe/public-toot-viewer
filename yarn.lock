@@ -2897,10 +2897,10 @@ vitest@^0.6.3:
     tinyspy "^0.3.0"
     vite "^2.7.10"
 
-vue-demi@^0.12.4:
-  version "0.12.4"
-  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.12.4.tgz#420dd17628f95f1bbce1102ad3c51074713a8049"
-  integrity sha512-ztPDkFt0TSUdoq1ZI6oD730vgztBkiByhUW7L1cOTebiSBqSYfSQgnhYakYigBkyAybqCTH7h44yZuDJf2xILQ==
+vue-demi@^0.12.5:
+  version "0.12.5"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.12.5.tgz#8eeed566a7d86eb090209a11723f887d28aeb2d1"
+  integrity sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==
 
 vue-eslint-parser@^8.0.0, vue-eslint-parser@^8.0.1:
   version "8.2.0"
