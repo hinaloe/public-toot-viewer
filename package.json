@@ -19,7 +19,7 @@
     "bootstrap": "^4.5.3",
     "sanitize-html": "^2.7.0",
     "striptags": "^3.2",
-    "vue": "^2.6.14"
+    "vue": "^2.7.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.3",
@@ -42,7 +42,7 @@
     "vite-plugin-vue2": "^1.9.3",
     "vitest": "^0.15.2",
     "vue-demi": "^0.12.5",
-    "vue-template-compiler": "^2.6.14",
+    "vue-template-compiler": "^2.7.0",
     "vue-tsc": "^0.34.15"
   },
   "browserslist": [
