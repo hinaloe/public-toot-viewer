@@ -2883,10 +2883,10 @@ universalify@^2.0.0:
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-2.0.0.tgz#75a4984efedc4b08975c5aeb73f530d02df25717"
   integrity sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==
 
-unplugin-vue2-script-setup@^0.11.0:
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/unplugin-vue2-script-setup/-/unplugin-vue2-script-setup-0.11.0.tgz#39e087011f1ace3fd5f5a80ab2579da61bb4695b"
-  integrity sha512-fkBmn3l7hUvYs2Y/NavWSfDk6v3FxEmhaoiiVT62Y6W0w7Kw1wWO9xYOdzdD5DcjGVinF16msjRIN5v4XjnU3g==
+unplugin-vue2-script-setup@^0.11.2:
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/unplugin-vue2-script-setup/-/unplugin-vue2-script-setup-0.11.2.tgz#5b56b88c3ec6e97a8d71e85279674d800f66b8d0"
+  integrity sha512-iriJUpDJKoYhY1m+061mrsYZNQh2Nris40atcS8pxQkd5sNO/F8IowT8GRoj0Jb78SfE2p8OyMW6Hq1MuG4wsw==
   dependencies:
     "@antfu/utils" "^0.5.2"
     "@babel/core" "^7.18.0"
