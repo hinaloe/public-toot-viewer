@@ -1,3 +1,3 @@
-export default async function () {
-  process.env.TZ = "UTC";
+export default function () {
+  process.env.TZ = 'UTC'
 }

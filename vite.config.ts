@@ -1,62 +1,21 @@
-/// <reference types="vitest" />
-import { resolve } from "path"
-import { defineConfig } from "vite"
-import {createVuePlugin} from 'vite-plugin-vue2'
-import PkgConfig from 'vite-plugin-package-config'
-import ScriptSetup from 'unplugin-vue2-script-setup/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import Inspect from 'vite-plugin-inspect'
-import legacy from '@vitejs/plugin-legacy'
-
-const alias = [
-  { find: /^~/, replacement: '' },
-  // { find: 'vue', replacement: 'vue/dist/vue.runtime.esm.js' },
-  {
-    find: '@',
-    replacement: resolve(__dirname, 'src'),
-  },
-]
-
+import { fileURLToPath, URL } from 'node:url'
+import { defineConfig } from 'vitest/config'
+import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   base: '/',
-  root: './',
   publicDir: './static',
   build: {
     outDir: './dist',
   },
   resolve: {
-    alias,
-    dedupe: ['vue-demi'],
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
-  plugins: [
-    createVuePlugin({
-      jsx: true,
-    }),
-    PkgConfig(),
-    Inspect(),
-    ScriptSetup(),
-    AutoImport({
-      imports: [
-        '@vue/composition-api', 'vitest',
-      ],
-      eslintrc: {
-        enabled: true,
-      },
-    }),
-    legacy({
-      targets: ['ie >= 11'],
-      additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
-    }),
-  ],
-  optimizeDeps: {
-    // exclude: ['axios'],
-  },
+  plugins: [vue()],
   test: {
     environment: 'happy-dom',
-    setupFiles: [
-      'vitest.setup.ts',
-    ],
-    globalSetup: 'vitest.global-setup.ts',
+    globalSetup: './vitest.global-setup.ts',
   },
 })

@@ -36,13 +36,13 @@ describe('Instance list item', () => {
       },
   }
 
-  const wrapper = mount(InstanceListItem, {propsData: {instance}})
+  const wrapper = mount(InstanceListItem, { props: { instance } })
 
   expect(wrapper.html()).toMatchSnapshot()
 
-  expect(wrapper.element.querySelector('.instance-name')?.textContent).to.equal('mastodon.xyz')
-  expect(wrapper.html()).not.contains("DOWN")
-  expect(wrapper.html()).includes('23922 users / connections: 18337')
+  expect(wrapper.element.querySelector('.instance-name')?.textContent).toBe('mastodon.xyz')
+  expect(wrapper.html()).not.toContain("DOWN")
+  expect(wrapper.html()).toContain('23922 users / connections: 18337')
   })
 
   it('should render Instance list item with DOWN status', () => {
@@ -59,12 +59,20 @@ describe('Instance list item', () => {
       "connections": null,
   }
 
-  const wrapper = mount(InstanceListItem, {propsData: {instance}})
+  const wrapper = mount(InstanceListItem, { props: { instance } })
 
   expect(wrapper.html()).toMatchSnapshot()
 
-  expect(wrapper.element.querySelector('.instance-name')?.textContent).to.equal('physi.cc')
-  expect(wrapper.html()).contains("DOWN")
-  expect(wrapper.element.querySelector('b.text-danger')?.textContent?.trim()).to.equal('DOWN')
+  expect(wrapper.element.querySelector('.instance-name')?.textContent).toBe('physi.cc')
+  expect(wrapper.html()).toContain("DOWN")
+  expect(wrapper.element.querySelector('b.text-danger')?.textContent?.trim()).toBe('DOWN')
+  })
+  it('should emit selected with instance name on click', async () => {
+    const instance = { name: 'mstdn.jp', up: true, users: 1, connections: 1 }
+    const wrapper = mount(InstanceListItem, { props: { instance } })
+
+    await wrapper.trigger('click')
+
+    expect(wrapper.emitted('selected')).toEqual([['mstdn.jp']])
   })
 })

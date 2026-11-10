@@ -2,7 +2,7 @@
   <a
     class="dropdown-item"
     href="#"
-    @click.prevent="$emit('selected', instance.name)"
+    @click.prevent="emit('selected', instance.name)"
   >
     <div class="instance-name">{{ instance.name }}</div>
     <div>
@@ -16,14 +16,13 @@
     </div>
   </a>
 </template>
-<script setup lang="ts">
-type InstanceInfo = {
-  name: string
-  users: number
-  connections: number
-  up: boolean
-  [key: string]: unknown
-}
 
-defineProps<{instance: InstanceInfo}>()
+<script setup lang="ts">
+import type { InstanceInfo } from '@/types'
+
+defineProps<{ instance: InstanceInfo }>()
+
+const emit = defineEmits<{
+  selected: [name: string]
+}>()
 </script>
