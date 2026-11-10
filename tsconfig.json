@@ -20,6 +20,12 @@
         },
         "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
       },
+      "vueCompilerOptions": {
+        "experimentalCompatMode": 2,
+        "experimentalTemplateCompilerOptions": {
+          "compatConfig": { "MODE": 2 } // optional
+        }
+      },
       "include": ["**/*.ts", "**/*.tsx", "**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
       "exclude": ["node_modules", "mock", "build", "dist"]
     }

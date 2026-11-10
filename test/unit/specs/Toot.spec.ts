@@ -1,8 +1,6 @@
 import Toot from '@/components/TootItem.vue'
 import {mount} from '@vue/test-utils'
 
-import {it, describe, expect} from 'vitest'
-
 describe('Toot', () => {
   it('should render Toot', () => {
     const toot = {

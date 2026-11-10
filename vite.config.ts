@@ -4,6 +4,7 @@ import { defineConfig } from "vite"
 import {createVuePlugin} from 'vite-plugin-vue2'
 import PkgConfig from 'vite-plugin-package-config'
 import ScriptSetup from 'unplugin-vue2-script-setup/vite'
+import AutoImport from 'unplugin-auto-import/vite'
 import Inspect from 'vite-plugin-inspect'
 import legacy from '@vitejs/plugin-legacy'
 
@@ -35,9 +36,17 @@ export default defineConfig({
     PkgConfig(),
     Inspect(),
     ScriptSetup(),
+    AutoImport({
+      imports: [
+        '@vue/composition-api', 'vitest',
+      ],
+      eslintrc: {
+        enabled: true,
+      },
+    }),
     legacy({
       targets: ['ie >= 11'],
-      additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+      additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
     }),
   ],
   optimizeDeps: {
