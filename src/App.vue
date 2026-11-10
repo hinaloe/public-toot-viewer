@@ -3,7 +3,7 @@
     <div class="container">
       <h1>PTL Viewer</h1>
       <p class="lead">
-        マストドンの公開タイムラインをみるやつ。inspired by <a href="http://junk.azyobuzi.net/mastodonptl/">junk.azyobuzi.net/mastodonptl/</a>
+        マストドンの公開タイムラインをみるやつ。inspired by <a href="https://junk.azyobuzi.net/mastodonptl/">junk.azyobuzi.net/mastodonptl/</a>
       </p>
       <p>
         github: <a href="https://github.com/hinaloe/public-toot-viewer"><span class="hidden-xs-down">hinaloe/</span>public-toot-viewer</a> by <a
