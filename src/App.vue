@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <div class="container">
       <h1>PTL Viewer</h1>
       <p class="lead">
@@ -40,14 +40,12 @@
               class="dropdown-menu"
               style="display: block;right: 0"
             >
-              <Instance
+              <InstanceListItem
                 v-for="instance in filteredInstances"
                 :key="instance.name"
                 :instance="instance"
                 @selected="instanceSelected"
-              >
-                err
-              </Instance>
+              />
             </div>
           </div>
           <div class="col-12 col-md-6">
@@ -76,7 +74,7 @@
           v-for="toot in toots"
           :key="toot.id"
         >
-          <Toot :toot="toot" />
+          <TootItem :toot="toot" />
         </div>
         <div
           v-if="currentUri && !loading"
@@ -97,136 +95,149 @@
   </div>
 </template>
 
-<script>
-import Toot from './components/TootItem.vue'
-import Instance from './components/InstanceListItem.vue'
+<script setup lang="ts">
+import { computed, onMounted, onUnmounted, ref, shallowRef } from 'vue'
 import axios from 'axios'
+import TootItem from './components/TootItem.vue'
+import InstanceListItem from './components/InstanceListItem.vue'
+import type { InstanceInfo, Toot } from './types'
 
-export default {
-  name: 'App',
-  components: {
-    Toot, Instance,
-  },
-  data () {
-    return {
-      toots: [],
-      instances: [],
-      suggestEnabled: false,
-      domain: '',
-      local: false,
-      loading: false,
-      currentUri: null,
-      error: '',
-    }
-  },
-  computed: {
-    filteredInstances () {
-      return this.instances.filter(instance => instance.name.includes(this.domain)).slice(0, 6)
-    },
-  },
-  mounted () {
-    if (!window.URLSearchParams) {
-      this.error = 'お使いのブラウザーはURLSearchParamsに対応していないため、このアプリケーションは利用できません。最新の Chrome または Firefox をご利用ください。'
-      return
-    }
-    setInterval(() => {
-      if (this.currentUri && !this.loading && this.toots.length) {
-        const url = this.currentUri
-        url.searchParams.delete('max_id')
-        url.searchParams.set('since_id', this.toots[0].id)
-        axios.get(url.href).then((res) => {
-          this.toots.unshift(...res.data)
-        })
-      }
-    }, 30000)
-    axios.get('https://instances.social/instances.json').then(res => {
-      if (!Array.isArray(res.data)) {
-        return Promise.reject(new Error('Invalid response'))
-      }
-      if (process.env.NODE_ENV !== 'production') {
-        console.log('Instances list was loaded.', res.data)
-      }
-      this.instances = res.data
-    }).catch(err => {
-      this.error = err.message
-    })
-    const url = new URL(location.href)
-    if (url.searchParams.has('domain')) {
-      this.domain = url.searchParams.get('domain')
-      this.local = url.searchParams.has('local') && !['false', '', '0', 'no'].includes(url.searchParams.get('local'))
-      this.submit()
-    }
-  },
-  methods: {
-    getApiUri () {
-      const url = new URL(this.domain.includes('://') ? this.domain : 'https://' + this.domain)
-      url.pathname = '/api/v1/timelines/public'
-      return url
-    },
-    submit () {
-      this.error = ''
-      this.toots = []
-      this.loading = true
-      this.suggestEnabled = false
-      Promise.resolve().then(() => {
-        if (!this.domain.includes('.')) {
-          throw new Error('Invalid domain')
-        }
-        const url = this.getApiUri()
-        this.currentUri = url
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(url.searchParams)
-        }
-        url.searchParams.set('limit', '40')
-        if (this.local) {
-          url.searchParams.append('local', 'true')
-        }
-        return axios.get(url.href)
-      }).then(res => {
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(res.data)
-        }
-        this.toots = res.data
-        this.loading = false
-        this.updateSearchParams()
-        window.ga('send', 'event', 'Toots', 'load', this.domain)
-      }).catch((err) => {
-        this.error = err.message
-      })
-    },
-    loadMore () {
-      this.loading = true
-      Promise.resolve().then(() => {
-        const url = this.currentUri
-        url.searchParams.delete('since_id')
-        url.searchParams.set('max_id', this.toots[this.toots.length - 1].id)
-        if (process.env.NODE_ENV !== 'production') {
-          console.log(url.href)
-        }
-        return axios.get(url.href)
-      }).then((res) => {
-        this.toots.push(...res.data)
-        this.loading = false
-      }).catch((err) => {
-        this.error = err.message
-        this.loading = false
-      })
-    },
-    instanceSelected (name) {
-      this.domain = name
-      this.submit()
-    },
-    inputDomain () {
-      this.suggestEnabled = true
-    },
-    updateSearchParams () {
-      const to = `?domain=${this.domain}&local=${this.local.toString()}`
-      if (location.search !== to) {
-        history.pushState(null, null, to)
-      }
-    },
-  },
+const toots = ref<Toot[]>([])
+const instances = ref<InstanceInfo[]>([])
+const suggestEnabled = ref(false)
+const domain = ref('')
+const local = ref(false)
+const loading = ref(false)
+const currentUri = shallowRef<URL | null>(null)
+const error = ref('')
+
+const filteredInstances = computed(() =>
+  instances.value.filter(instance => instance.name.includes(domain.value)).slice(0, 6),
+)
+
+function errorMessage (err: unknown) {
+  return err instanceof Error ? err.message : String(err)
 }
+
+function getApiUri () {
+  const url = new URL(domain.value.includes('://') ? domain.value : 'https://' + domain.value)
+  url.pathname = '/api/v1/timelines/public'
+  return url
+}
+
+async function submit () {
+  error.value = ''
+  toots.value = []
+  loading.value = true
+  suggestEnabled.value = false
+  try {
+    if (!domain.value.includes('.')) {
+      throw new Error('Invalid domain')
+    }
+    const url = getApiUri()
+    currentUri.value = url
+    if (import.meta.env.DEV) {
+      console.log(url.searchParams)
+    }
+    url.searchParams.set('limit', '40')
+    if (local.value) {
+      url.searchParams.append('local', 'true')
+    }
+    const res = await axios.get<Toot[]>(url.href)
+    if (import.meta.env.DEV) {
+      console.log(res.data)
+    }
+    toots.value = res.data
+    loading.value = false
+    updateSearchParams()
+    window.gtag?.('event', 'load', { event_category: 'Toots', event_label: domain.value })
+  } catch (err) {
+    error.value = errorMessage(err)
+    currentUri.value = null
+    loading.value = false
+  }
+}
+
+async function loadMore () {
+  const url = currentUri.value
+  const last = toots.value[toots.value.length - 1]
+  if (!url || !last) {
+    return
+  }
+  loading.value = true
+  try {
+    url.searchParams.delete('since_id')
+    url.searchParams.set('max_id', last.id)
+    if (import.meta.env.DEV) {
+      console.log(url.href)
+    }
+    const res = await axios.get<Toot[]>(url.href)
+    toots.value.push(...res.data)
+  } catch (err) {
+    error.value = errorMessage(err)
+  } finally {
+    loading.value = false
+  }
+}
+
+async function loadNew () {
+  const url = currentUri.value
+  const first = toots.value[0]
+  if (!url || loading.value || !first) {
+    return
+  }
+  url.searchParams.delete('max_id')
+  url.searchParams.set('since_id', first.id)
+  const res = await axios.get<Toot[]>(url.href)
+  toots.value.unshift(...res.data)
+}
+
+function instanceSelected (name: string) {
+  domain.value = name
+  submit()
+}
+
+function inputDomain () {
+  suggestEnabled.value = true
+}
+
+function updateSearchParams () {
+  const to = `?domain=${domain.value}&local=${local.value.toString()}`
+  if (location.search !== to) {
+    history.pushState(null, '', to)
+  }
+}
+
+let timer: ReturnType<typeof setInterval> | undefined
+
+onMounted(() => {
+  timer = setInterval(() => {
+    loadNew().catch(err => console.error(err))
+  }, 30000)
+
+  axios.get<InstanceInfo[]>('https://instances.social/instances.json').then(res => {
+    if (!Array.isArray(res.data)) {
+      throw new Error('Invalid response')
+    }
+    if (import.meta.env.DEV) {
+      console.log('Instances list was loaded.', res.data)
+    }
+    instances.value = res.data
+  }).catch(err => {
+    error.value = errorMessage(err)
+  })
+
+  const url = new URL(location.href)
+  if (url.searchParams.has('domain')) {
+    domain.value = url.searchParams.get('domain') ?? ''
+    local.value = url.searchParams.has('local') && !['false', '', '0', 'no'].includes(url.searchParams.get('local') ?? '')
+    submit()
+  }
+})
+
+onUnmounted(() => {
+  clearInterval(timer)
+})
 </script>
 
 <style>

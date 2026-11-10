@@ -6,16 +6,22 @@ https://m6n-view.hnle.tk/
 
 ## Build Setup
 
+Requires Node.js 20.19+ / 22.12+ and [pnpm](https://pnpm.io/) (enable via `corepack enable`).
+
 ``` bash
 # install dependencies
-yarn install
+pnpm install
 
-# serve with hot reload at localhost:3000
-yarn dev
+# serve with hot reload at localhost:5173
+pnpm dev
 
 # build for production with minification
-yarn build
+pnpm build
 
 # run tests
-yarn test
+pnpm test
+
+# lint (oxlint) and type check (vue-tsc)
+pnpm lint
+pnpm typecheck
 ```

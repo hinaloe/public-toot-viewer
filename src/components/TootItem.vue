@@ -40,13 +40,11 @@
             Close
           </button>
         </p>
-        <!-- eslint-disable vue/no-v-html -->
         <div
           v-if="!toot.spoiler_text||more"
           class="content"
           v-html="content"
         />
-        <!-- eslint-enable vue/no-v-html -->
         <div v-if="toot.media_attachments.length">
           <div
             v-if="toot.sensitive && !allowSensitive"
@@ -74,91 +72,39 @@
   </article>
 </template>
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import striptags from 'striptags'
 import sanitize from 'sanitize-html'
+import type { Toot } from '@/types'
 
-type Emoji = {
-  shortcode: string
-  url: string
-  static_url: string
-  visible_in_picker: boolean
-}
-
-type Account = {
-  id: `${number}`
-  acct: string
-  display_name: string
-  url: string
-  avatar: string
-  header: string
-  note: string
-  followers_count: number
-  following_count: number
-  statuses_count: number
-  last_status_at: string
-  emojis: Emoji[]
-  fields?: {name: string, value:string, verified_at: string | null}[]
-  [key: string]: unknown
-}
-
-type Toot = {
-  id: `${number}`
-  url: string
-  account: Account
-  content: string
-  created_at: string
-  in_reply_to_id: Toot['id'] | null
-  in_reply_to_account_id?: Account['id'] | null
-  reblog: Toot | null
-  sensitive: boolean
-  spoiler_text: string
-  visibility: string
-  media_attachments: Array<{
-    id: `${number}`
-    type: string
-    url: string
-    preview_url: string
-    text_url: string
-    description: unknown
-    blurhash?: string|null
-    meta: {
-      [sizeVar: 'original' | 'small' | string]: {
-        width: number
-        height: number
-        size: string
-        aspect: number
-      }
-    }
-  }>
-  emojis: Emoji[]
-  [key: string]: unknown
-}
-
-const props = defineProps<{toot: Toot}>()
+const props = defineProps<{ toot: Toot }>()
 
 const allowSensitive = ref(false)
 const more = ref(false)
 
-const note = striptags(props.toot.account.note?.replace(/<br(?: \/)?>/g, '\n'))
+const note = computed(() => striptags(props.toot.account.note?.replace(/<br(?: \/)?>/g, '\n') ?? ''))
 
-const _date = new Date(props.toot.created_at)
-const date = `${_date.getFullYear()}/${_date.getMonth() + 1}/${_date.getDate()} ${_date.getHours()}:${`00${_date.getMinutes()}`.slice(-2)}:${`0${_date.getSeconds()}`.slice(-2)}`
+const date = computed(() => {
+  const d = new Date(props.toot.created_at)
+  return `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${`00${d.getMinutes()}`.slice(-2)}:${`0${d.getSeconds()}`.slice(-2)}`
+})
 
-const content = (()=> {
-  let sanitized: string = sanitize(props.toot.content, {
-          allowedTags: ['h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
-          'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
-          'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'span'],
-        allowedAttributes: {
-          a: ['href', 'target'],
-          // We don't currently allow img itself by default, but this
-          // would make sense if we did
-          img: ['src', 'alt'],
-          '*': ['class', 'title', 'rel'],
+const content = computed(() => {
+  let sanitized = sanitize(props.toot.content, {
+    allowedTags: ['h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
+      'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
+      'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre', 'span'],
+    allowedAttributes: {
+      a: ['href', 'target'],
+      // We don't currently allow img itself by default, but this
+      // would make sense if we did
+      img: ['src', 'alt'],
+      '*': ['class', 'title', 'rel'],
     },
   })
-  if (Array.isArray(props.toot.emojis) && props.toot.emojis.length) {
-    for (const emoji of props.toot.emojis) {
+  const emojis = props.toot.emojis
+  if (Array.isArray(emojis) && emojis.length) {
+    for (const emoji of emojis) {
       if (!emoji.shortcode || !emoji.url || !validateShortCode(emoji.shortcode)) {
         continue
       }
@@ -167,18 +113,19 @@ const content = (()=> {
   }
 
   return sanitized
-})()
+})
 
 function validateShortCode (name: string) {
   return /^[a-zA-Z0-9_]+$/.test(name)
 }
 </script>
-<style scoped="scoped">
+
+<style scoped>
     .card {
         word-break: break-all;
     }
 
-    .card >>> .invisible {
+    .card :deep(.invisible) {
         width: 0;
         height: 0;
         visibility: initial!important;
@@ -188,7 +135,7 @@ function validateShortCode (name: string) {
         position: absolute;
     }
 
-    .card >>> .ellipsis::after {
+    .card :deep(.ellipsis)::after {
         content: '…';
     }
 
@@ -215,7 +162,7 @@ function validateShortCode (name: string) {
         color: #626262;
     }
 
-    .content >>> .inline-emoji {
+    .content :deep(.inline-emoji) {
         display: inline-block;
         height: 24px;
         width: 24px;

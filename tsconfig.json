@@ -1,31 +1,8 @@
 {
-    "compilerOptions": {
-        "module": "esnext",
-        "target": "esnext",
-        "moduleResolution": "node",
-        "importHelpers": true,
-        "allowJs": true,
-        "esModuleInterop": true,
-        "jsx": "preserve",
-        "strict": true,
-        "sourceMap": true,
-        "baseUrl": ".",
-        "allowSyntheticDefaultImports": true,
-        "noEmit": true,
-        "skipLibCheck": true,
-        "paths": {
-          "@/*": [
-            "./src/*"
-          ]
-        },
-        "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
-      },
-      "vueCompilerOptions": {
-        "experimentalCompatMode": 2,
-        "experimentalTemplateCompilerOptions": {
-          "compatConfig": { "MODE": 2 } // optional
-        }
-      },
-      "include": ["**/*.ts", "**/*.tsx", "**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
-      "exclude": ["node_modules", "mock", "build", "dist"]
-    }
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" },
+    { "path": "./tsconfig.vitest.json" }
+  ]
+}
